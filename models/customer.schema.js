@@ -1,18 +1,18 @@
 const mongose = require("mongoose")
-const authSchema = mongose.Schema({
+const customerSchema = mongose.Schema({
     name : {
         type : String,
         require : true
     },
-    email : {
+    phoneNumber : {
         type : String,
         require : true
     },
-    password : {
+    subsAccountId : {
         type : String,
         require : true
     },
-    role : {
+    groubId : {
         type : String,
         require : true
     },
@@ -22,4 +22,4 @@ const authSchema = mongose.Schema({
     }
 })
 
-module.exports = mongose.model("Auth", authSchema)
+module.exports = mongose.model("Customer", customerSchema)
