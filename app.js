@@ -1,30 +1,43 @@
+require("dotenv").config()
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors   = require("cors")
+const config = require("./config")
+config.database()
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const serviceRoutes = require('./routes/service.route');
+const authRoutes = require('./routes/auth.route');
+const dashboardRoutes = require("./routes/dashboard.route")
 
 var app = express();
+
+const corsOption = {
+  origin : process.env.ALLOW_URL
+}
+
+app.use(cors(corsOption))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
+app.use(logger('common'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(`/api/${process.env.API_VERSION}/service`, serviceRoutes);
+app.use('/api/${process.env.API_VERSION}/auth', authRoutes);
+app.use('/api/${process.env.API_VERSION}/dashboard', dashboardRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  config.response(res, 404, "Path not found.")
 });
 
 // error handler
