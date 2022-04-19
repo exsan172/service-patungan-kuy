@@ -1,19 +1,23 @@
 const mongose = require("mongoose")
-const authSchema = mongose.Schema({
-    name : {
+const priceListSchema = mongose.Schema({
+    accountName : {
         type : String,
         require : true
     },
-    email : {
+    accountType : {
         type : String,
         require : true
     },
-    password : {
+    priod : {
         type : String,
         require : true
     },
-    role : {
-        type : String,
+    price : {
+        type : Number,
+        require : true
+    },
+    desc : {
+        type : Number,
         require : true
     },
     createdAt : {
@@ -22,4 +26,4 @@ const authSchema = mongose.Schema({
     }
 })
 
-module.exports = mongose.model("Auth", authSchema)
+module.exports = mongose.model("PriceList", priceListSchema)
